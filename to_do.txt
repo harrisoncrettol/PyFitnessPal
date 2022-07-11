@@ -1,0 +1,5 @@
+1: read in user data into a UserData obj
+2: add a DiaryEntry obj to user if today's doesn't exist
+3: run main loop
+
+main loop: - view dashboard (show cal goal and cal renmaining)
