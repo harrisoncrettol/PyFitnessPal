@@ -13,6 +13,9 @@ class FoodItem:
         self.sodium = sodium
         self.fiber = fiber
 
+    def __str__(self):
+        return "{} {}".format(str(self.serving_size), str(self.description))
+
     def lst_to_item(self, lst):
         self.description = lst[0]
         self.brand_name = lst[1]
@@ -40,8 +43,13 @@ class FoodItem:
         print("Fiber: " + str(self.fiber))
         print()
 
-    def print_description(self):
-        print(str(self.description))
+    def print_small(self): # prints essiential details
+        print("Description: " + str(self.description))
+        print("Serving Size: " + str(self.serving_size))
+        print("Calories: " + str(self.calories))
+        print("Fat: " + str(self.fat))
+        print("Protein: " + str(self.protein))
+        print()
 
 
 
@@ -57,19 +65,32 @@ def read_items() -> list:
 
 
 # writes food items to file
-def write_items(items) -> None:
-    #f = open("food_nutrition_value.txt", "w")
-    for item in items:
-        print(item)
+def write_item(item:FoodItem) -> None:
+    f = open("food_nutrition_value.txt", "a")
+    
+    line = ",".join([str(i) for i in item.to_list()])
+    f.write("\n")
+    f.write(line)
+    
+    f.close()
+    
     
 
 
 # create_food: creates and returns a food item based on the parameters
-def create_food(description, serving_size, brand_name=""):
-    cals = input("Calories: ")
-    total_fat = input("Total fat (g): ")
-    cholesterol = input("Cholesterol (mg): ")
-    sodium = input()
+def create_food() -> FoodItem:
+    item = FoodItem()
+    item.brand_name = input("Brand Name: ")
+    item.description = input("Description: ")
+    item.serving_size = input("Serving Size: ")
+    item.calories = input("Calories: ")
+    item.carbs = input("Carbs (g): ")
+    item.fat = input("Fat (g): ")
+    item.protein = input("Protein (g):")
+    item.fiber = input("Fiber (g): ")
+    item.sodium = input("Sodium (mg): ")
+    return item
+
 
 
 # NEED A FUNCTION THAT TAKES IN A LIST CONTAINING FOOD ITEM DATA

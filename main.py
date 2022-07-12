@@ -3,7 +3,7 @@
 import copy
 import json
 from datetime import datetime
-from food_item import FoodItem, read_items, write_items
+from food_item import FoodItem, read_items, write_item, create_food
 from diary_entry import DiaryEntry
 from user import UserData
 
@@ -12,8 +12,9 @@ def print_menu():
     print("1) View Dashboard") # Shows calorie base goal and calories remaining
     print("2) View Today's Diary")
     print("3) Add Item to Diary")
-    print("4) Show Food Database")
-    print("5) Show user data")
+    print("4) Remove Item from Diary")
+    print("5) Show Food Item Database")
+    print("6) Add Food Item to Database")
 
 
 def main_loop():
@@ -23,6 +24,8 @@ def main_loop():
     admin = UserData()
     admin.load_data(data)
     
+    # make sure user has data (if not we need to prompt them for all their info)
+
 
     items = read_items()
     today_entry = DiaryEntry()
@@ -50,7 +53,11 @@ def main_loop():
 
 
         elif menu_option == "1": # view dashboard (cal goal and cal renmaining)
-            pass
+            daily_total = today_entry.get_total_calories()
+            cals_left = admin.calorie_goal - daily_total
+            print("Calorie goal is: " + str(int(admin.calorie_goal)))
+            print("Calories eaten today: " + str(int(daily_total)))
+            print("Calories remaining: " + str(int(cals_left)))
 
 
         elif menu_option == "2": # view today's diary entry
@@ -58,44 +65,24 @@ def main_loop():
 
 
         elif menu_option == "3": # add item to diary
-            # ask user for an item
-            food_name = input("Type in food: ")
-            # make sure item exists
-            food_found = False
-            user_item = None
-            
-            for item in items:
-                if item.description.lower() == food_name.lower():
-                    food_found = True
-                    user_item = copy.deepcopy(item)
-                    break
-            
-            if not food_found:
-                print("Item not found")
-                continue
-
-            # ask user for num of servings and to which meal
-            user_item.print_item()
-            num_servings = float(input("How many servings? (decimal): "))
-            which_meal = input("To which meal? (breakfast,lunch,diner,snacks): ")
-
-            # create FoodItem obj with the given data
-            lst = user_item.to_list(float(num_servings))
-            # print scaled user item
-            #print(lst)
-
-            # add it to today's DiaryEntry obj
-            today_entry.meals[which_meal].append(lst)
+            today_entry.add_item(items)
             admin.write_data()
 
     
-        elif menu_option == "4": # show food database
-            for item in items:
-                item.print_description()
+        elif menu_option == "4": # remove item from diary
+            today_entry.remove_item(items)
+
         
 
-        elif menu_option == "5": # print user data
-            admin.print_data()
+        elif menu_option == "5": # print food item database
+            for item in items:
+                item.print_small()
+
+
+        elif menu_option == "6":
+            item = create_food()
+            write_item(item)
+            items = read_items()
 
         
         else:
