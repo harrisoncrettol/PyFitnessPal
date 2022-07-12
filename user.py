@@ -39,5 +39,3 @@ class UserData:
         print("Name: {}\nCal Goal: {}\nEntries:".format(self.name, self.calorie_goal))
         for e in self.diary_entries:
             print("\t" + str(e))
-
-    
