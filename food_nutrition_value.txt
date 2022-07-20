@@ -1,4 +1,0 @@
-apple,generic,1 medium,104,28,0,1,2,21,5
-banana,generic,1 medium,105,27,0,1,1,14,3
-peanut butter,generic,1 tbsp,96,4,8,4,69,2,1
-test,generic,1.0 cup,100.0,10.0,2.0,3.0,5.0,4.0
