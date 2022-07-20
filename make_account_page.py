@@ -1,7 +1,5 @@
 import pygame
-import os
 import time
-import json
 from person import User
 from pygame.locals import *
 from game_funcs import *

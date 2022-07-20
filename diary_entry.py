@@ -2,7 +2,6 @@ from datetime import datetime
 from food_item import FoodItem
 import copy
 
-
 class DiaryEntry:
     def __init__(self, date=datetime.now().strftime("%Y-%m-%d")):
         self.date = date

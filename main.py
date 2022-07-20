@@ -1,5 +1,5 @@
 from datetime import datetime
-from food_item import FoodItem, create_food_item, read_food_items
+from food_item import create_food_item, read_food_items
 from diary_entry import DiaryEntry
 from person import User, create_user
 

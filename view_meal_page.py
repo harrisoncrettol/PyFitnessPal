@@ -1,11 +1,5 @@
 import pygame
-import os
-import time
-import json
-from datetime import datetime
-from food_item import FoodItem, read_food_items, create_food_item
-from diary_entry import DiaryEntry
-from person import User
+from food_item import FoodItem
 from pygame.locals import *
 from game_funcs import *
 from add_food_page import add_food_func

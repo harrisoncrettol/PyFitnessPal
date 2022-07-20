@@ -1,7 +1,5 @@
-from email import message
 import pygame
 import os
-from datetime import datetime
 from game_funcs import *
 from make_account_page import make_account_func
 from log_in_page import log_in_func

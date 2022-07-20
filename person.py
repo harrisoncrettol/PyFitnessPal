@@ -1,4 +1,3 @@
-from datetime import datetime
 from diary_entry import DiaryEntry
 import json
 

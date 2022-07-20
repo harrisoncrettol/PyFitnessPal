@@ -1,9 +1,6 @@
 import pygame
-import os
 import time
-import json
 import copy
-from person import User
 from food_item import read_food_items
 from pygame.locals import *
 from game_funcs import *
