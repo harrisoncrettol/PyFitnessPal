@@ -2,7 +2,7 @@
 #                  calories, protein (g), carbs (g), fat (g)
 
 class FoodItem:
-    def __init__(self, brand_name="", description="", serving_size="", cals=0, protein=0, carbs=0, fat=0):
+    def __init__(self, brand_name="", description="", serving_size="", cals=0, protein=0, carbs=0, fat=0, barcode=-1):
         self.brand_name = brand_name
         self.description = description
         self.serving_size = serving_size
@@ -10,6 +10,7 @@ class FoodItem:
         self.protein = protein
         self.carbs = carbs
         self.fat = fat
+        self.barcode = barcode
 
     def __str__(self) -> str:
         return "{} {}".format(self.serving_size, self.description)
@@ -22,7 +23,7 @@ class FoodItem:
     def to_list(self, scale=1.0) -> list:
         num, amt = self.serving_size.split()
         new_servings = "{} {}".format(str(float(num)*scale), amt)
-        return [self.brand_name, self.description, new_servings, float(self.calories)*scale, float(self.protein)*scale, float(self.carbs)*scale, float(self.fat)*scale]
+        return [self.brand_name, self.description, new_servings, float(self.calories)*scale, float(self.protein)*scale, float(self.carbs)*scale, float(self.fat)*scale, self.barcode]
 
     def from_list(self, lst) -> None:
         self.brand_name = lst[0]
@@ -32,6 +33,7 @@ class FoodItem:
         self.protein = lst[4]
         self.carbs = lst[5]
         self.fat = lst[6]
+        self.barcode = lst[7]
 
     def write(self, filename="databases//food_item_database.txt") -> None:
         line = ",".join([str(i) for i in self.to_list()]) + '\n'
@@ -53,7 +55,7 @@ def create_food_item() -> FoodItem:
 
 
 # returns list of lists containing food item data
-def read_food_items(filename) -> list:
+def read_food_items(filename="databases//food_item_database.txt") -> list:
     items = []
     with open(filename, "r") as f:
         for line in f.read().split("\n")[:-1]:

@@ -63,6 +63,7 @@ def create_food_item_func(screen, items):
             
         else:
             # create FoodItem list with the given data
+            data.append(-1) # adds default barcode to data lst
             item = FoodItem()
             item.from_list(data)
             item.write()

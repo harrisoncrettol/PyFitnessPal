@@ -3,6 +3,7 @@ from food_item import FoodItem, write_food_items, read_food_items
 from pygame.locals import *
 from game_funcs import *
 from create_food_item_page import create_food_item_func
+from live_barcode_reader import scan_barcode
 
 def view_food_database_func(screen, user, entry, food_items):
 
@@ -13,6 +14,8 @@ def view_food_database_func(screen, user, entry, food_items):
     scroll_right_button = Button(850, 600, 100, 100, "->")
     add_food_button = Button(200, 200, 150, 150, "Create food", 30)
     remove_food_button = Button(650, 200, 150, 150, "Remove food", 30)
+    assign_barcode_button = Button(350, 900, 200, 50, "Add barcode", 25)
+
 
     count = 0
     cur_item = FoodItem()
@@ -41,6 +44,20 @@ def view_food_database_func(screen, user, entry, food_items):
                     food_items.pop(i)
                     num_items = len(food_items)
                     write_food_items(food_items)
+                
+                # CLICKING ASSIGN BARCODE BUTTON
+                if is_over(assign_barcode_button, mouse):
+                    # when we scan the barcode, we want - update food item database so that the item's barcode is changed
+                    barcode = scan_barcode()
+                    if barcode is not None:
+                        barcode = str(barcode)[2:-1]
+                    print(barcode)
+                    cur_item.barcode = barcode
+                    write_food_items(food_items)
+                    food_items = read_food_items()
+                    
+
+
 
         
         screen.fill(BG_COLOR)
@@ -51,6 +68,7 @@ def view_food_database_func(screen, user, entry, food_items):
             remove_food_button.draw(screen, mouse)
             scroll_left_button.draw(screen, mouse)
             scroll_right_button.draw(screen, mouse)
+            assign_barcode_button.draw(screen, mouse)
 
             i = count%num_items
             cur_item = food_items[i]

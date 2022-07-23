@@ -3,6 +3,8 @@ from food_item import FoodItem
 from pygame.locals import *
 from game_funcs import *
 from add_food_page import add_food_func
+from add_food_from_barcode_page import add_food_from_barcode_func
+from live_barcode_reader import scan_barcode
 
 def view_meal_func(screen, user, entry, meal):
 
@@ -15,6 +17,7 @@ def view_meal_func(screen, user, entry, meal):
     scroll_right_button = Button(850, 600, 100, 100, "->")
     add_food_button = Button(200, 200, 150, 150, "Add food", 30)
     remove_food_button = Button(650, 200, 150, 150, "Remove food", 30)
+    scan_barcode_button = Button(350, 900, 200, 50, "Scan barcode", 25)
 
     count = 0
     cur_item = FoodItem()
@@ -46,12 +49,23 @@ def view_meal_func(screen, user, entry, meal):
                     num_items = len(meal_items)
                     user.write_data()
 
+                if is_over(scan_barcode_button, mouse):
+                    barcode = scan_barcode()
+                    if barcode != -1:
+                        add_success = add_food_from_barcode_func(screen, meal, entry, barcode)
+                        if add_success:
+                            meal_items = entry.meals[meal]
+                            num_items = len(meal_items)
+                            user.write_data()
+
+                    
+
 
         
         screen.fill(BG_COLOR)
         message_display(str(meal), 65, 400, 75, screen)
         add_food_button.draw(screen, mouse)
-
+        scan_barcode_button.draw(screen, mouse)
 
         if num_items > 0:
             food_item_box.draw(screen)

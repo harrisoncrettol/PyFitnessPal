@@ -26,7 +26,7 @@ def decode(image):
         if obj.type == "EAN13":
             return [image, obj.data]
 
-    return [image, None]
+    return [image, -1]
 
 # uses webcam to scan a barcode
 # returns a barcode (None if barcode was not found)
@@ -41,13 +41,12 @@ def scan_barcode():
         frame, barcode = decode(frame)
         # show the image in the window
         cv2.imshow(window_name, frame)
-        if (cv2.waitKey(1) == ord("q")) or (cv2.getWindowProperty(window_name, cv2.WND_PROP_VISIBLE) < 1) or (barcode != None):
+        if (cv2.waitKey(1) == ord("q")) or (cv2.getWindowProperty(window_name, cv2.WND_PROP_VISIBLE) < 1) or (barcode != -1):
             break
     
     cv2.destroyAllWindows()
     return barcode
     
-
 
 if __name__ == '__main__':
     barcode = scan_barcode()
