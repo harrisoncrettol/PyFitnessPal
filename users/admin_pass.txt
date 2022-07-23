@@ -1,0 +1,1 @@
+{"name": "admin", "password": "pass", "calorie_goal": "2000", "diary_entries": []}
